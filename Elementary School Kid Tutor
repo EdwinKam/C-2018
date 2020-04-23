@@ -138,3 +138,4 @@ while (choice != 5); //If choice = 5 then it leaves the loop and close.
 	cout << endl << "Thank you for using Math Tutor!\n";
 	return 0;
 }
+//
