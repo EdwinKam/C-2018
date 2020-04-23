@@ -1,0 +1,149 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+const int COLS = 4; //Room # [0], Length[1], Width[2], Square Inches[3]
+
+int getRooms ();
+double getTileCost ();
+void nameRooms (string [], int);
+void getSize (int [][COLS],string [], int);
+void getSquareInches (int [][COLS], int);
+
+
+int main()
+{
+	int numOfRooms;
+	double tileCost;
+  int ask;
+  int size;
+  int repeat, yes, no;// idk how to let the user input yes or no without delcaring lol
+	do{
+	numOfRooms = getRooms(); //Get the number of rooms the user wants to tile (Also the number of rows)
+	
+	//Declaring Arrays
+	int table[numOfRooms][COLS];
+	string roomName[numOfRooms];
+	
+	nameRooms(roomName,numOfRooms); //Name each room
+	getSize(table,roomName,numOfRooms); //Gets the length, width into columns 2 and 3 respectively
+	getSquareInches(table, numOfRooms); //Multiplies columns 2 and 3 and puts it into column 4
+	tileCost = getTileCost();
+
+  //let user to check the cost
+  
+do{
+  cout << "What is the number of the room you want to ask the price for?";
+  cin >> ask;
+  while (ask > numOfRooms) //invalid for ask
+  {
+    cout << "Sorry, you didn't input the size of Room " << ask << endl;
+    cout << "Please enter another room number to check the price.";
+    cin >> ask;
+  }
+  size = table[ask-1][3]*tileCost;
+  cout << "The total tiling price of room " << ask << " would be " <<size << endl;
+  cout << "Do you want to check the price for the other rooms too? (Input yes for 1, no for 2)";
+
+  cin >> repeat;
+  char yes, no;
+  while (repeat != 1 && repeat!= 2)
+  {
+    cout << "Input yes for 1, no for 2";
+    cin >> repeat;
+  }
+} while ( repeat != 2);
+
+  cout << "Do you want to try another set? (Input yes for 1, no for 2)";//ask if the user want to set over the whole thing again
+  cin >> repeat;
+  while (repeat != 1 && repeat!= 2)
+  {
+    cout << "Input yes for 1, no for 2";
+    cin >> repeat;
+  }
+} while ( repeat != 2);
+  
+ // ofstream tileprice;
+  //tileprice.open ("tile.txt");
+  //for (int i = 0; i < numOfRooms; i++)
+  //	{
+	//  tileprice << "Cost of Room " << i+1 << " is $" << table[i][3]*tileCost << endl;
+//	}
+ // tileprice.close();
+ 
+  
+  
+
+}
+
+int getRooms()
+{
+	int numOfRooms;
+	cout << "How many rooms do you plan on tiling? ";
+	cin >> numOfRooms;
+	return numOfRooms;
+}
+
+void nameRooms(string roomName[], int rows)
+{
+	string name;
+	for (int counter = 0; counter < rows; counter++)
+	{
+		cout << "What is the name of room " << counter + 1 << ": ";
+		cin >> ws; //Gets rid of the whitespace. In order to allow multiple words for room name
+		getline(cin,name);
+		roomName[counter] = name;
+	}
+}
+
+void getSize (int table[][COLS],string roomName[], int rows)
+{
+	int length, width;
+	for (int counter = 0; counter < rows; counter++)
+	{
+		table[counter][0] = counter + 1; //Room #
+		
+		cout << "Length of the tiles in " << roomName[counter] << " (in inches): ";
+		cin >> length;
+		table[counter][1] = length; //Tile length
+		
+		cout << "Width of the tiles in " << roomName[counter] << " (in inches): ";
+		cin >> width;
+		table[counter][2] = width; //Tile Width
+	}
+}
+
+void getSquareInches (int table[][COLS], int rows)
+{
+	for (int counter = 0; counter < rows; counter++)
+	{
+		table[counter][3] = table[counter][1] * table[counter][2];
+  }
+  
+}
+
+double getTileCost ()
+{
+	double cost;
+	do
+	{
+		cout << "How much do the tiles cost per square inch? ";
+		cin >> cost;
+		if (cost <= 0)
+			cout << "You need to enter a non-zero positive number!" << endl;
+	} while (cost <= 0);
+
+	return cost;
+}
+double infile ()
+{
+	ofstream tileprice;
+  tileprice.open ("tile.txt");
+  for (int i = 0; i < numOfRooms; i++)
+  	{
+	  tileprice << "Cost of Room " << i+1 << " is $" << table[i][3]*tileCost << endl;
+	}
+  tileprice.close();
+}
