@@ -1,0 +1,140 @@
+//Program Description: This program will allow the user to select from a menu and try to solve a problem set that is random.
+//It will check to see if the user is correct and notify them if they are correct or incorrect.
+//It will continue to pop up a menu after every problem set until the user quits the program.
+
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main ()
+{
+	//Declaring variables
+	int choice, randNum1, randNum2;
+	double sum, solution, userAnswer;
+	unsigned seed;
+	
+	do
+	{
+		//Randomize the random numbers for different problem sets each time.
+		seed = time(0);
+		srand(seed);
+		
+
+		//Menu
+		cout << setw(22) << "Math Tutor Menu\n";
+		cout << "---------------------------\n";
+		cout << "1. Addition Problem\n";
+		cout << "2. Subtraction Problem\n";
+		cout << "3. Multiplication Problem\n";
+		cout << "4. Division Problem\n";
+		cout << "5. Quit this program\n";
+		cout << "---------------------------\n";
+		cout << "Enter your choice (1-5): ";
+		cin >> choice;
+		
+		//Validation of anything that is not in menu
+		while (choice < 1 || choice > 5)
+		{
+			cout << "Please enter 1, 2, 3, 4, or 5: ";
+			cin >> choice;
+		}
+		
+	
+		if (choice != 5) //Close the program if 5 is inputted
+		{
+			switch (choice)
+			{
+				case 1: 
+				{
+					//Randomization & solution of the summation of 2 random 3 digit numbers
+					randNum1 = (rand() % 899 + 1) + 1;
+					randNum2 = (rand() % 899 + 1) + 1;
+					solution = randNum1 + randNum2;
+					
+					//Display the problem set to the user & waits for user to type answer
+					cout << endl << setw(5) << randNum1 << endl;
+					cout << "+" << setw(4) << randNum2 << endl;
+					cout << "-----" << endl;
+					cout << " ";
+					cin >> userAnswer;
+					
+					//Checks to see if the user was right or wrong
+					if (userAnswer == solution)
+						cout << endl << "Congratulations! That's the right answer!\n" << endl << endl;
+					else
+						cout << endl << "Sorry the answer is " << solution << endl << endl;
+					break;	
+				}
+				case 2: 
+				{
+					//Randomization & solution of the subtration of 2 random 3 digit numbers
+					randNum1 = (rand() % 899 + 1) + 1;
+					randNum2 = (rand() % 899 + 1) + 1;
+					solution = randNum1 - randNum2;
+					
+					//Display the problem set to the user & waits for user to type answer
+					cout << endl << setw(5) << randNum1 << endl;
+					cout << "-" << setw(4) << randNum2 << endl;
+					cout << "-----" << endl;
+					cout << " ";
+					cin >> userAnswer;
+					
+					//Checks to see if the user was right or wrong
+					if (userAnswer == solution)
+						cout << endl << "Congratulations! That's the right answer!\n" << endl << endl;
+					else
+						cout << endl << "Sorry the answer is " << solution << endl << endl;
+					break;	
+				}
+				case 3: 
+				{
+					//Randomization & solution of the multiplication of 2 random 2 digit numbers
+					randNum1 = (rand() % 99 + 1) + 1;
+					randNum2 = (rand() % 99 + 1) + 1;
+					solution = randNum1 * randNum2;
+					
+					//Display the problem set to the user & waits for user to type answer
+					cout << endl << setw(5) << randNum1 << endl;
+					cout << "*" << setw(4) << randNum2 << endl;
+					cout << "-----" << endl;
+					cout << " ";
+					cin >> userAnswer;
+					
+					//Checks to see if the user was right or wrong
+					if (userAnswer == solution)
+						cout << endl << "Congratulations! That's the right answer!\n" << endl << endl;
+					else
+						cout << endl << "Sorry the answer is " << solution << endl << endl;
+					break;	
+				}
+				case 4: //Only works by rounding whole numbers. Couldn't figure out how to get decimals to be the same as userAnswer
+				{
+					//Randomization & solution of the division of a bigger number to a smaller number
+					randNum1 = (rand() % 99 + 1) + 49;
+					randNum2 = (rand() % 49 + 1) + 1;
+					solution = (randNum1) / (randNum2);
+					
+					//Display the problem set to the user & waits for user to type answer
+					cout << endl << "Round to the nearest whole number!\n";
+					cout << endl << setw(5) << randNum1 << " " << "/"
+						 << " " << randNum2 << " " << "=" << " ";
+					cin >> userAnswer;
+					
+					//Checks to see if the user was right or wrong
+					if (userAnswer == solution)
+						cout << endl << "Congratulations! That's the right answer!\n" << endl << endl;
+					else
+						cout << endl << "Sorry the answer is " << solution << endl << endl;
+					break;	
+				}	
+			}
+		}
+		
+	} 
+while (choice != 5); //If choice = 5 then it leaves the loop and close.
+	
+	cout << endl << "Thank you for using Math Tutor!\n";
+	return 0;
+}
